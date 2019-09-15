@@ -220,6 +220,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 				if (logger.isDebugEnabled()) {
 					logger.debug("Creating shared instance of singleton bean '" + beanName + "'");
 				}
+				// 把当前正在创建的bean记录在缓存中，对循环依赖进行检测
 				beforeSingletonCreation(beanName);
 				boolean newSingleton = false;
 				boolean recordSuppressedExceptions = (this.suppressedExceptions == null);
@@ -227,6 +228,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					this.suppressedExceptions = new LinkedHashSet<Exception>();
 				}
 				try {
+					// 使用回调方法 创建单例bean
 					singletonObject = singletonFactory.getObject();
 					newSingleton = true;
 				}
@@ -250,9 +252,12 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					if (recordSuppressedExceptions) {
 						this.suppressedExceptions = null;
 					}
+					// 移除缓存中对该bean正在加载的状态
 					afterSingletonCreation(beanName);
 				}
 				if (newSingleton) {
+					// 将新创建的bean加入缓存，并且删除加载bean过程中所记录的各种辅助状态
+					// 这些辅助状态主要是在回调方法创建bean时候引入的
 					addSingleton(beanName, singletonObject);
 				}
 			}
