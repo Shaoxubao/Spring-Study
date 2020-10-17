@@ -60,6 +60,7 @@ public @interface Transactional {
 	/**
 	 * Alias for {@link #transactionManager}.
 	 * @see #transactionManager
+	 * 通过bean name指定事务管理器
 	 */
 	@AliasFor("transactionManager")
 	String value() default "";
@@ -72,6 +73,7 @@ public @interface Transactional {
 	 * bean definition.
 	 * @since 4.2
 	 * @see #value
+     * 同value属性
 	 */
 	@AliasFor("value")
 	String transactionManager() default "";
@@ -80,6 +82,7 @@ public @interface Transactional {
 	 * The transaction propagation type.
 	 * <p>Defaults to {@link Propagation#REQUIRED}.
 	 * @see org.springframework.transaction.interceptor.TransactionAttribute#getPropagationBehavior()
+     * 指定传播行为
 	 */
 	Propagation propagation() default Propagation.REQUIRED;
 
@@ -87,6 +90,7 @@ public @interface Transactional {
 	 * The transaction isolation level.
 	 * <p>Defaults to {@link Isolation#DEFAULT}.
 	 * @see org.springframework.transaction.interceptor.TransactionAttribute#getIsolationLevel()
+     * 指定隔离级别
 	 */
 	Isolation isolation() default Isolation.DEFAULT;
 
@@ -94,6 +98,7 @@ public @interface Transactional {
 	 * The timeout for this transaction.
 	 * <p>Defaults to the default timeout of the underlying transaction system.
 	 * @see org.springframework.transaction.interceptor.TransactionAttribute#getTimeout()
+     * 指定超时时间（单位秒）
 	 */
 	int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
 
@@ -106,6 +111,7 @@ public @interface Transactional {
 	 * <i>not</i> throw an exception when asked for a read-only transaction
 	 * but rather silently ignore the hint.
 	 * @see org.springframework.transaction.interceptor.TransactionAttribute#isReadOnly()
+     * 是否只读事务
 	 */
 	boolean readOnly() default false;
 
@@ -122,6 +128,8 @@ public @interface Transactional {
 	 * <p>Similar to {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(Class clazz)}.
 	 * @see #rollbackForClassName
 	 * @see org.springframework.transaction.interceptor.DefaultTransactionAttribute#rollbackOn(Throwable)
+     *
+     * 方法在发生指定异常时回滚，默认是所有异常都回滚
 	 */
 	Class<? extends Throwable>[] rollbackFor() default {};
 
@@ -142,6 +150,8 @@ public @interface Transactional {
 	 * <p>Similar to {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(String exceptionName)}.
 	 * @see #rollbackFor
 	 * @see org.springframework.transaction.interceptor.DefaultTransactionAttribute#rollbackOn(Throwable)
+     *
+     * 方法在发生指定异常名称时回滚，默认是所有异常都回滚
 	 */
 	String[] rollbackForClassName() default {};
 
@@ -155,6 +165,8 @@ public @interface Transactional {
 	 * <p>Similar to {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(Class clazz)}.
 	 * @see #noRollbackForClassName
 	 * @see org.springframework.transaction.interceptor.DefaultTransactionAttribute#rollbackOn(Throwable)
+     *
+     * 方法在发生指定异常时不回滚，默认是所有异常都回滚
 	 */
 	Class<? extends Throwable>[] noRollbackFor() default {};
 
@@ -167,6 +179,8 @@ public @interface Transactional {
 	 * <p>Similar to {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(String exceptionName)}.
 	 * @see #noRollbackFor
 	 * @see org.springframework.transaction.interceptor.DefaultTransactionAttribute#rollbackOn(Throwable)
+     *
+     * 方法在发生指定异常名称时不回滚，默认是所有异常都回滚
 	 */
 	String[] noRollbackForClassName() default {};
 
