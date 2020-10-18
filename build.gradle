@@ -1093,6 +1093,18 @@ project("spring-aspects") {
 	}
 }
 
+project("baoge-aop") {
+    description = "aop demo study"
+
+    dependencies {
+        compile(project(":spring-core"))
+        optional(project(":spring-beans"))
+        optional(project(":spring-context"))
+        optional("org.aspectj:aspectjrt:1.8.9")
+        optional("org.aspectj:aspectjweaver:1.8.9")
+    }
+}
+
 project("spring-framework-bom") {
 	description = "Spring Framework (Bill of Materials)"
 

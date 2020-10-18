@@ -29,3 +29,5 @@ include "spring-framework-bom"
 // Exposes gradle buildSrc for IDE support
 include "buildSrc"
 rootProject.children.find{ it.name == "buildSrc" }.name = "spring-build-src"
+include 'baoge-aop'
+
