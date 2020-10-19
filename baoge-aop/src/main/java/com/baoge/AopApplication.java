@@ -1,6 +1,7 @@
 package com.baoge;
 
 import com.baoge.service.UserService;
+import com.baoge.service.UserServiceImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -17,7 +18,10 @@ public class AopApplication {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AopApplication.class);
-        UserService userService = context.getBean(UserService.class);
+//        UserService userService = context.getBean(UserService.class);
+
+        // 将UserServiceImpl修改不实现接口类UserService，则Spring底层用CGLIB代理，若是实现接口则用JDK代理
+        UserServiceImpl userService = (UserServiceImpl) context.getBean("userService");
         userService.login(1);
     }
 
